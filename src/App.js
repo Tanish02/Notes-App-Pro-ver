@@ -17,7 +17,7 @@ function App() {
       createdAt: new Date().toLocaleString(),
     };
 
-    const update = [...notes, newNote];
+    const updated = [...notes, newNote];
     setNotes(updated);
     localStorage.setItem("notes", JSON.stringify(updated));
     setText("");
