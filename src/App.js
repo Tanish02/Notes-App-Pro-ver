@@ -40,8 +40,23 @@ function App() {
         placeholder="Write Something..."
       ></textarea>
       <br />
+      <button onClick={addNotes}>Add Notes</button>
+
+      <ul style={{ listStyle: "none", padding: "0", marginTop: "20px" }}>
+        {notes.map((n) => (
+          <li
+            key={n.id}
+            style={{ border: "1px solid #ccc", margin: "5px", padding: "10px" }}
+          >
+            <p>{n.text}</p>
+            <small>{n.createdAt}</small>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export default App;
+
+// end code
