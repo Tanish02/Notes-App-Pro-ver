@@ -69,7 +69,9 @@ function App() {
       </div>
       <ul style={{ listStyle: "none", padding: "0", marginTop: "20px" }}>
         {notes
-          .filter((n) => n.text.toLowerCaase().include(query.toLowerCase()))
+          .filter(
+            (n) => n.text && n.text.toLowerCase().includes(query.toLowerCase())
+          )
           .map((n) => (
             <li
               key={n.id}
@@ -99,4 +101,3 @@ function App() {
 export default App;
 
 // end code
-// Add Notes
