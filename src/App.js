@@ -29,19 +29,17 @@ function App() {
 
   // Add Notes
   function addNotes() {
-    if (!text.trim()) return;
-
     const newNote = {
       id: Date.now(),
-      title: text.split("\n")[0] || "Untitled",
-      text,
+      title: "Untitled",
+      text: "",
       createdAt: new Date().toLocaleString(),
     };
 
     const updated = [...notes, newNote];
     setNotes(updated);
     localStorage.setItem("notes", JSON.stringify(updated));
-    setText("");
+    setSelectedNote(newNote);
   }
 
   // Delete Notes
@@ -53,12 +51,14 @@ function App() {
   }
 
   // Modify Notes
-  function editNote(id, newText) {
+  function editNote(id, field, value) {
     const updated = notes.map((n) =>
-      n.id === id ? { ...n, text: newText, title: newText.split("\n")[0] } : n
+      n.id === id ? { ...n, [field]: value } : n
     );
     setNotes(updated);
     localStorage.setItem("notes", JSON.stringify(updated));
+    const fresh = updated.find((n) => n.id === id);
+    if (fresh) setSelectedNote(fresh);
   }
 
   const filteredNotes = notes.filter(
@@ -242,14 +242,30 @@ function App() {
               transition: "0.3s",
             }}
           >
-            <h2 contentEditable suppressContentEditableWarning>
-              {selectedNote.title}
-            </h2>
-
+            <input
+              type="text"
+              value={selectedNote.title}
+              onChange={(e) =>
+                editNote(selectedNote.id, "title", e.target.value)
+              }
+              style={{
+                width: "100%",
+                border: "none",
+                outline: "none",
+                background: "transparent",
+                fontSize: "22px",
+                fontWeight: "600",
+                color: darkMode ? "#fff" : "#111",
+                marginBottom: "10px",
+              }}
+              placeholder="Note Title..."
+            />
             <textarea
               rows="15"
               value={selectedNote.text}
-              onChange={(e) => editNote(selectedNote.id, e.target.value)}
+              onChange={(e) =>
+                editNote(selectedNote.id, "text", e.target.value)
+              }
               style={{
                 width: "100%",
                 marginTop: "10px",
@@ -262,6 +278,7 @@ function App() {
                 outline: "none",
                 resize: "vertical",
               }}
+              placeholder="Start typing your note here..."
             ></textarea>
 
             <div style={{ textAlign: "right", marginTop: "10px" }}>
