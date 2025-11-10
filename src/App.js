@@ -182,10 +182,11 @@ function App() {
                 <FileText size={16} />
                 <div>
                   <strong>
-                    {n.title.length > 25
+                    {n.title && n.title.length > 25
                       ? n.title.slice(0, 25) + "..."
-                      : n.title}
+                      : n.title || "Untitled"}
                   </strong>
+
                   <br />
                   <small style={{ opacity: 0.6 }}>{n.createdAt}</small>
                 </div>
