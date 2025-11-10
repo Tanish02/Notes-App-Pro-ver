@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [notes, setNotes] = useState(() => {
@@ -8,6 +8,16 @@ function App() {
 
   const [text, setText] = useState("");
   const [query, setQuery] = useState("");
+
+  // (Added Dark Mode Feature)
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Toggle Dark Mode - useEffect for theme switch
+
+  useEffect(() => {
+    document.body.style.background = darkMode ? "#111" : "#f9f9f9";
+    document.body.style.color = darkMode ? "White" : "black";
+  }, [darkMode]);
 
   // Add Notes
   function addNotes() {
@@ -50,6 +60,10 @@ function App() {
     >
       <h1>Notes App Pro ver </h1>
 
+      {/* Dark/Liight mode toggle button*/}
+      <button onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? "🟡 Light Mode" : "⚫ Dark Mode"}
+      </button>
       <textarea
         rows="4"
         cols="40"
